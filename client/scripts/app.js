@@ -21,7 +21,12 @@ var App = {
     Parse.readAll((data) => {
       // examine the response from the server request:
       console.log(data);
-
+      data.results.forEach(function(el){
+        if(el.text && App.validateString(el.text)){
+          MessagesView.renderMessage(el);
+          RoomsView.renderRoom(el.roomname);
+        }
+      });
       callback();
     });
   },
@@ -34,5 +39,18 @@ var App = {
   stopSpinner: function() {
     App.$spinner.fadeOut('fast');
     FormView.setStatus(false);
+  },
+  
+  validateString: function(string) {
+    var validity = true;
+    if( string == '' ) { 
+      validity = false; 
+    }
+    if( string.match( /[|<|,|>|\.|\?|\/|:|;|"|'|{|\[|}|\]|\||\\|~|`|!|@|#|\$|%|\^|&|\*|\(|\)|_|\-|\+|=]+/ ) != null ) {
+        validity = false;
+    }
+    return validity;
   }
 };
+
+
