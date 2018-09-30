@@ -10,6 +10,7 @@ var App = {
     FormView.initialize();
     RoomsView.initialize();
     MessagesView.initialize();
+    Friends.initialize();
 
     // Fetch initial batch of messages
     App.startSpinner();
@@ -20,9 +21,8 @@ var App = {
   fetch: function(callback = ()=>{}) {
     Parse.readAll((data) => {
       // examine the response from the server request:
-      console.log(data);
       data.results.forEach(function(el){
-        if(el.text && App.validateString(el.text)){
+        if(el.username && el.text  && el.roomname && App.validateString(el.roomname)){
           MessagesView.renderMessage(el);
           RoomsView.renderRoom(el.roomname);
         }
@@ -46,11 +46,17 @@ var App = {
     if( string == '' ) { 
       validity = false; 
     }
-    if( string.match( /[|<|,|>|\.|\?|\/|:|;|"|'|{|\[|}|\]|\||\\|~|`|!|@|#|\$|%|\^|&|\*|\(|\)|_|\-|\+|=]+/ ) != null ) {
+    if( string.match(/[|<|>|\?|\/|:|;|"|'|{|\[|}|\]|\||\\|~|`|@|#|\$|%|\^|&|\*|\(|\)|_|\-|\+|=]+/ ) != null) {
         validity = false;
     }
     return validity;
   }
 };
+
+setInterval(function(){
+  MessagesView.$chats.empty();
+  RoomsView.$roomnamesArray = [];
+  App.fetch();
+}, 10000);
 
 

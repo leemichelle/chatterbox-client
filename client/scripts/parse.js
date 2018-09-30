@@ -7,13 +7,9 @@ var Parse = {
     $.ajax({
       url: Parse.server,
       type: 'POST',
-      data: JSON.stringify({
-      "username": App.username, 
-      "roomname": RoomsView.$select.val(),
-      "text": MessagesView.$message.val()
-    }),
+      data: JSON.stringify(message),
       contentType: 'application/json',
-      success: function(data){
+      success: function(message){
         console.log('message sent')},
       error: function(error) {
         console.error('chatterbox: Failed to send messages', error);

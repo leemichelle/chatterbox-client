@@ -1,7 +1,6 @@
 var Rooms = {
   add: function() {
-      console.log('hi');
-      RoomsView.$select.append('<option value="'+$('#roomID').val()+'">'+$('#roomID').val()+'</option>');
+      RoomsView.$select.append('<option value="'+$('#roomID').val()+'" selected="selected">'+$('#roomID').val()+'</option>');
+      $('#roomID').val("");
   }
-
 };

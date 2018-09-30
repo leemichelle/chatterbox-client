@@ -4,6 +4,7 @@ var FormView = {
 
   initialize: function() {
     FormView.$form.on('submit', FormView.handleSubmit);
+    FormView.$form.on('keypress', function(e){if(e.which == 13){FormView.handleSubmit(e);}});
   },
 
   handleSubmit: function(event) {
@@ -15,9 +16,11 @@ var FormView = {
       "text": MessagesView.$message.val()
     };
     Parse.create(messageObj);
-    
-    
-    // console.log('click!');
+    MessagesView.$message.val("");
+    MessagesView.$chats.empty();
+    RoomsView.$select.empty();
+    RoomsView.$roomnamesArray = [];
+    App.fetch();
   },
 
   setStatus: function(active) {
